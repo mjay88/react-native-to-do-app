@@ -2,8 +2,8 @@ import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
+import { StyleSheet, View, FlatList, Button } from "react-native";
 
-import { StyleSheet, View, FlatList } from "react-native";
 //buttons do not have a style prop
 //android and ios will compile differently, so sometimes you will have to find the right underlying element to support the style you want
 //styles do not cascade in react native, so child and descendant elements do not inherit styles.
@@ -13,12 +13,22 @@ import { StyleSheet, View, FlatList } from "react-native";
 
 export default function App() {
 	const [listOfGoals, setListOfGoals] = useState([]);
+	const [modalIsVisible, setModalIsVisible] = useState(false);
+
+	function startAddGoalHandler() {
+		setModalIsVisible(true);
+	}
+
+	function endAddGoalHandler() {
+		setModalIsVisible(false);
+	}
 
 	function addGoalHandler(goal) {
 		setListOfGoals((prevGoals) => [
 			...prevGoals,
 			{ text: goal, id: Math.random().toString() },
 		]);
+		endAddGoalHandler();
 	}
 
 	function deleteGoalHandler(id) {
@@ -28,28 +38,42 @@ export default function App() {
 	}
 
 	return (
-		<View style={styles.appContainer}>
-			<GoalInput onAddGoal={addGoalHandler} />
-			<View style={styles.goalsContainer}>
-				<FlatList
-					data={listOfGoals}
-					renderItem={(itemData) => {
-						return (
-							<GoalItem
-								text={itemData.item.text}
-								id={itemData.item.id}
-								onDeleteItem={deleteGoalHandler}
-							/>
-						);
-					}}
-					keyExtractor={(item, index) => {
-						return item.id;
-					}}
-					alwaysBounceVertical={true}
+		<>
+			<StatusBar setBarStyle="light" />
+			<View style={styles.appContainer}>
+				<Button
+					title="Add New Goal"
+					color="#5e0acc"
+					onPress={startAddGoalHandler}
 				/>
+				{modalIsVisible && (
+					<GoalInput
+						visible={modalIsVisible}
+						onCancel={endAddGoalHandler}
+						onAddGoal={addGoalHandler}
+					/>
+				)}
+				<View style={styles.goalsContainer}>
+					<FlatList
+						data={listOfGoals}
+						renderItem={(itemData) => {
+							return (
+								<GoalItem
+									text={itemData.item.text}
+									id={itemData.item.id}
+									onDeleteItem={deleteGoalHandler}
+								/>
+							);
+						}}
+						keyExtractor={(item, index) => {
+							return item.id;
+						}}
+						alwaysBounceVertical={true}
+					/>
+				</View>
+				<StatusBar style="auto" />
 			</View>
-			<StatusBar style="auto" />
-		</View>
+		</>
 	);
 }
 

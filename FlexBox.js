@@ -7,43 +7,46 @@ const FlexBox = () => {
 	//be default children will inherit parent height but not parent width
 
 	return (
-		<View style={styles.container}>
-			<View
-				style={{
-					backgroundColor: "red",
-					margin: 3,
-					flex: 1,
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<Text>1</Text>
-			</View>
+		<>
+			<StatusBar />
+			<View style={styles.container}>
+				<View
+					style={{
+						backgroundColor: "red",
+						margin: 3,
+						flex: 1,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Text>1</Text>
+				</View>
 
-			<View
-				style={{
-					backgroundColor: "blue",
-					margin: 3,
-					flex: 2,
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<Text>2</Text>
-			</View>
+				<View
+					style={{
+						backgroundColor: "blue",
+						margin: 3,
+						flex: 2,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Text>2</Text>
+				</View>
 
-			<View
-				style={{
-					backgroundColor: "green",
-					margin: 3,
-					flex: 3,
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<Text>3</Text>
+				<View
+					style={{
+						backgroundColor: "green",
+						margin: 3,
+						flex: 3,
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<Text>3</Text>
+				</View>
 			</View>
-		</View>
+		</>
 	);
 };
 
